@@ -70,13 +70,18 @@ describe("Band, Musician, and Song Models", () => {
   test("can delete a Band", async () => {
     const band = await Band.create({ name: "Rebelution", genre: "reggae" });
 
-
-    const deletedBand = await band.destroy()
+    const deletedBand = await band.destroy();
     expect(deletedBand.name).toBeNull;
   });
 
   test("can delete a Musician", async () => {
-    // TODO - test deleting a musician
-    expect("NO TEST").toBe("EXPECTED VALUE HERE");
+    const song = await Song.create({
+      title: "golden hour",
+      year: 2022,
+      length: 3.52,
+    });
+
+    const deletedSong = song.destroy();
+    expect(deletedSong).toBeNull;
   });
 });
