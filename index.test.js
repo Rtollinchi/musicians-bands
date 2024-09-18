@@ -53,13 +53,26 @@ describe("Band, Musician, and Song Models", () => {
   });
 
   test("can update a Musician", async () => {
-    // TODO - test updating a musician
-    expect("NO TEST").toBe("EXPECTED VALUE HERE");
+    const musician = await Musician.create({
+      name: "Bad Bunny",
+      instruments: "horns",
+    });
+    await Musician.update(
+      { name: "Post Malone", instruments: "guitar" },
+      { where: { id: musician.id } }
+    );
+    const updatedMusician = await Musician.findByPk(musician.id);
+
+    expect(updatedMusician.name).toBe("Post Malone");
+    expect(updatedMusician.instruments).toBe("guitar");
   });
 
   test("can delete a Band", async () => {
-    // TODO - test deleting a band
-    expect("NO TEST").toBe("EXPECTED VALUE HERE");
+    const band = await Band.create({ name: "Rebelution", genre: "reggae" });
+
+
+    const deletedBand = await band.destroy()
+    expect(deletedBand.name).toBeNull;
   });
 
   test("can delete a Musician", async () => {
