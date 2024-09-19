@@ -84,4 +84,16 @@ describe("Band, Musician, and Song Models", () => {
     const deletedSong = song.destroy();
     expect(deletedSong).toBeNull;
   });
+
+  test("associate musicians with a band", async() => {
+    const band = await Band.create({name: 'Linkin Park', genre: 'Alternative/Rock'})
+    const musician1 = await Musician.create({name: 'Chester', instruments: 'vocals'});
+
+    await band.addMusician(musician1);
+
+    const musicians = await band.getMusicians();
+
+    expect(musicians[0].name).toBe('Chester');
+
+  })
 });
