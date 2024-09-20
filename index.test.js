@@ -85,15 +85,54 @@ describe("Band, Musician, and Song Models", () => {
     expect(deletedSong).toBeNull;
   });
 
-  test("associate musicians with a band", async() => {
-    const band = await Band.create({name: 'Linkin Park', genre: 'Alternative/Rock'})
-    const musician1 = await Musician.create({name: 'Chester', instruments: 'vocals'});
+  test("Can associate Musicians with a Band", async () => {
+    const band = await Band.create({
+      name: "Linkin Park",
+      genre: "Alternative/Rock",
+    });
+    const musician1 = await Musician.create({
+      name: "Chester",
+      instruments: "vocals",
+    });
 
     await band.addMusician(musician1);
 
     const musicians = await band.getMusicians();
 
-    expect(musicians[0].name).toBe('Chester');
+    expect(musicians[0].name).toBe("Chester");
+  });
 
-  })
+  test("Song and musician association", async () => {
+    const band = await Band.create({
+      name: "Linkin Park",
+      genre: "Alternative/Rock",
+    });
+    const musician1 = await Musician.create({
+      name: "Chester",
+      instruments: "vocals",
+    });
+    const musician2 = await Musician.create({
+      name: "Mike Shinoda",
+      instruments: "vocals/guitar",
+    });
+    const song1 = await Song.create({
+      title: "Numb",
+      year: 2003,
+      length: 3.08,
+    });
+    const song2 = await Song.create({
+      title: "Faint",
+      year: 2003,
+      length: 2.43,
+    });
+
+    await band.addSong(song1);
+    await band.addSong(song2);
+
+    const bandSongs = await band.getSongs();
+
+    expect(bandSongs.length).toBe(2);
+  });
+
+  
 });
