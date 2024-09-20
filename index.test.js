@@ -115,6 +115,10 @@ describe("Band, Musician, and Song Models", () => {
       name: "Mike Shinoda",
       instruments: "vocals/guitar",
     });
+
+    await band.addMusician(musician1);
+    await band.addMusician(musician2);
+
     const song1 = await Song.create({
       title: "Numb",
       year: 2003,
@@ -132,7 +136,9 @@ describe("Band, Musician, and Song Models", () => {
     const bandSongs = await band.getSongs();
 
     expect(bandSongs.length).toBe(2);
-  });
 
-  
+    const bandMusicians = await band.getMusicians();
+
+    expect(bandMusicians.length).toBe(2);
+  });
 });
